@@ -10,7 +10,7 @@ def send_email(to_address, subject, message, cc_addresses=None):
     email['To'] = to_address
     email['Subject'] = subject
 
-    # Ajout des adresses en copie et copie invisible
+    # Ajout des adresses en copie
     if cc_addresses:
         email['Cc'] = ', '.join(cc_addresses)
 
@@ -26,7 +26,7 @@ def send_email(to_address, subject, message, cc_addresses=None):
         server.ehlo()
         server.starttls()
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-        # Envoi de l'email à tous les destinataires (To, Cc, Bcc)
+        # Envoi de l'email à tous les destinataires (To, Cc)
         server.sendmail(email['From'], [to_address] + cc_addresses, email.as_string())
         server.quit()
         print("Email envoyé avec succès !")
