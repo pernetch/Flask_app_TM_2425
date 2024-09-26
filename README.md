@@ -51,6 +51,7 @@ The current directory is a basic Flask application template connected to an SQLi
 
 4. **Add the configuration to the project**
      - Duplicate the *empty-config.py* file, rename it to *config.py* and modify its content according to your own configuration. 
+     - Example:
          ```bash
          SECRET_KEY="YOUR_SECRET_KEY"
          DATABASE="NAME_OF_THE_DATABASE_FILE.DB"
