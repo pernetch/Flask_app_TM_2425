@@ -2,6 +2,8 @@ import os
 from flask import Flask
 from app.utils import *
 
+from app.email.email import send_email
+
 # Importation des blueprints de l'application
 # Chaque blueprint contient des routes pour l'application
 from app.views.home import home_bp
@@ -22,6 +24,8 @@ def create_app():
     app.register_blueprint(home_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(user_bp)
+
+    #send_email("christian.pernet@websud.ch", "test", "coucou")
 
     # On retourne l'instance de l'application Flask
     return app
