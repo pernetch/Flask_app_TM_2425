@@ -1,5 +1,7 @@
 import os
 from flask import Flask
+from flask_bootstrap import Bootstrap5
+
 from app.utils import *
 
 from app.email.email import send_email
@@ -16,6 +18,9 @@ def create_app():
 
     # Crée l'application Flask
     app = Flask(__name__)
+
+    # If you want to use Bootstrap 5, import and instanzlize the Bootstrap5 class instead:
+    bootstrap = Bootstrap5(app)
 
     # Chargement des variables de configuration stockées dans le fichier config.py
     app.config.from_pyfile(os.path.join(os.path.dirname(__file__), "config.py"))
