@@ -1,36 +1,57 @@
 <!doctype html>
 <head>
+    {% block head %}
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>{% block title %}{% endblock %}</title>
+    
+    {% block styles %}
+        <!-- Bootstrap CSS -->
+        {{ bootstrap.load_css() }}
+    {% endblock %}
+    
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% endblock %}
 </head>
 
 <body>
     <header id="header">
-        <nav id="header-nav">
-            <div id="header-nav-logo">
-                <a href="{{url_for('home.landing_page')}}">
-                    <img src="{{url_for('static', filename='imgs/logo-csud.svg')}}" alt="logo-csud"/>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container header-nav-logo">
+                <a class="navbar-brand" href="{{url_for('home.landing_page')}}">
+                   <img src="{{url_for('static', filename='imgs/logo-csud.svg')}}" alt="logo-csud" height="24"/>
                 </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul id="header-nav-menu" class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if g.user %}
+                        <li ><span>{{ g.user['username'] }}</span>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Se déconnecter</a>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('user.show_profile')}}">Consulter son profil</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">S'enregistrer</a>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Se connecter</a>
+                    {% endif %}
+                </ul>
+              </div>
             </div>
-            <ul id="header-nav-menu">
-                {% if g.user %}
-                    <li><span>{{ g.user['username'] }}</span>
-                    <li><a href="{{ url_for('auth.logout') }}">Se déconnecter</a>
-                    <li><a href="{{url_for('user.show_profile')}}">Consulter son profil</a></li>
-                {% else %}
-                    <li><a href="{{ url_for('auth.register') }}">S'enregistrer</a>
-                    <li><a href="{{ url_for('auth.login') }}">Se connecter</a>
-                {% endif %}
-            </ul>
-        </nav>
+          </nav>
+        
     </header>
         
     <main id="main-content">
         {% block content %}{% endblock %}
     </main>
 
-    <footer id="footer">
-        <div id="footer-nav">
+    <div class="container">
+    <footer id="footer-nav" class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        
             <div>
                 <p>Template de base TM</p>
             </div>
@@ -40,8 +61,12 @@
             <div>
                 <p>Johan Jobin</p>
             </div>
-        </div>
+        
     </footer>
-
+</div>
+    {% block scripts %}
+            <!-- Optional JavaScript -->
+            {{ bootstrap.load_js() }}
+    {% endblock %}
     <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
 </body>
